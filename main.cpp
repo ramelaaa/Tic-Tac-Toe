@@ -40,7 +40,7 @@ int main(){
         // Allow Players to play
         while ( (mode % 4 == 1) || (mode % 4 == 3) ){
         	//player 1's turn
-        	if(mode % 3 == 1){
+        	if(mode % 4 == 1){
         		player = 1;
             	letter = 'x';
         	}
@@ -90,12 +90,12 @@ int main(){
             }
             mode++;
         }  
-    }while(mode <= 30 && mode >= 0);
+    }while(mode < 19);
     
     //Determine of there was a stalemate.
     //If turns equals 18, that means that the board is full
     //there is no X's or O's that are in a row of three.
-    if (mode == 18){
+    if (mode == 19){
         cout << "This game is a draw!" << endl;
     }
     
