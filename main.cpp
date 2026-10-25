@@ -10,12 +10,10 @@ bool check_user_input(string number);
 
 int main(){
     
-    int player   = 0, 
-        response = 0, 
-        mode     = 1;
-    char letter  = '0',
-         temp    = '0';
-    bool is_response_valid;
+    int player; // var to conrol which player is playing. 
+    int mode     = 1; // modes to let player 1 or 2 play, or to check board after each move
+    char letter; // letter to mark the board
+    char temp    = '0';
     string user_input = "";
 
     vector<vector<int>> winning_rows = {//Horizontal Possibilities
@@ -30,11 +28,11 @@ int main(){
                                 {0,4,8},// 6
                                 {2,4,6} }; //7
 
-    cout << "Let's play Tic Tac Toe! <<" << endl;
+    cout << "Let's play Tic Tac Toe!" << endl;
     cout << "This is the game board." << endl;
-    board();
+    board(); // print board to users what it looks like.
     cout << "Player 1 will be X and Player 2 will be O." << endl;
-    board();
+    board(); // print board for first time.
     
     do{
         // Allow Players to play
@@ -42,12 +40,12 @@ int main(){
         	//player 1's turn
         	if(mode % 4 == 1){
         		player = 1;
-            	letter = 'x';
+            	letter = 'X';
         	}
         	//player 2's turn
         	else{
         		player = 2;
-            	letter = 'o';
+            	letter = 'O';
         	}
             
             //Allow player to make a selection
@@ -55,13 +53,13 @@ int main(){
             cin >> user_input;
             
             //validate user input
-            is_response_valid = check_user_input(user_input);
+            bool is_response_valid = check_user_input(user_input);
             if(is_response_valid == false){
                 //Give player another chance
                 cout << "Your input is not valid. Try again!" << endl;
             }else{
                 //Convert input to an int to locate square on board
-                response = stoi(user_input);
+                int response = stoi(user_input);
                 //temp will store char value of user input
                 temp = '0' + response;
                 //if user_input corresponds to a free space on board
@@ -73,20 +71,19 @@ int main(){
                     cout<< endl;
                     cout<<"You cannot place an "<< letter <<" there, try again." << endl;
                 }
-                // cout << "mode : " << mode << endl;
+               // printer updated board with new entry from player
                 board();
             }
         }
         //Check if anyone won, with any of the row possibilites
         while ( mode % 4 == 0 || mode % 4 == 2){
-            // cout << "checking board*****************" << endl;
-            for(int i = 0; i < winning_rows.size(); i++){
-                if ((square[winning_rows[i][0]] == square[winning_rows[i][1]]) && (square[winning_rows[i][1]] == square[winning_rows[i][2]])){
+            for(const auto& row : winning_rows){
+                // three in a row have to be the same char
+                if (( square[row[0]] == square[row[1]] && square[row[1]] == square[row[2]]){
                     cout << "Player " << player << " wins!" << endl;
                     //break do-while loop condition
                     return 0;
-                // All possibilies tested and no one won (yet)
-                }
+                }// All possibilies tested and no one won (yet)
             }
             mode++;
         }  
@@ -98,7 +95,6 @@ int main(){
     if (mode == 19){
         cout << "This game is a draw!" << endl;
     }
-    
     return 0;   
 }
 
