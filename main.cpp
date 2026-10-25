@@ -19,16 +19,16 @@ int main(){
     string user_input = "";
 
     vector<vector<int>> winning_rows = {//Horizontal Possibilities
-                                {1,2,3}, //0
-                                {4,5,6}, //1
-                                {7,8,9}, //2
+                                {0,1,2}, //0
+                                {3,4,5}, //1
+                                {6,7,8}, //2
                                 //Vertical Possibilities
-                                {1,4,7}, //3
-                                {2,5,8}, //4
-                                {3,6,9}, //5
+                                {0,3,6}, //3
+                                {1,4,7}, //4
+                                {2,5,8}, //5
                                 //Diagonal Possibilities
-                                {1,5,9},// 6
-                                {3,5,7} }; //7
+                                {0,4,8},// 6
+                                {2,4,6} }; //7
 
     cout << "Let's play Tic Tac Toe! <<" << endl;
     cout << "This is the game board." << endl;
@@ -38,7 +38,7 @@ int main(){
     
     do{
         // Allow Players to play
-        while ( (mode % 3 == 1) || (mode % 3 == 2) ){
+        while ( (mode % 4 == 1) || (mode % 4 == 3) ){
         	//player 1's turn
         	if(mode % 3 == 1){
         		player = 1;
@@ -73,18 +73,16 @@ int main(){
                     cout<< endl;
                     cout<<"You cannot place an "<< letter <<" there, try again." << endl;
                 }
+                // cout << "mode : " << mode << endl;
                 board();
             }
         }
         //Check if anyone won, with any of the row possibilites
-        if ( mode % 3 == 0){
+        while ( mode % 4 == 0 || mode % 4 == 2){
+            // cout << "checking board*****************" << endl;
             for(int i = 0; i < winning_rows.size(); i++){
                 if ((square[winning_rows[i][0]] == square[winning_rows[i][1]]) && (square[winning_rows[i][1]] == square[winning_rows[i][2]])){
                     cout << "Player " << player << " wins!" << endl;
-                    cout << i << endl;
-                    cout << winning_rows[i+1][0] << endl;
-                    cout << winning_rows[i+1][1] << endl;
-                    cout << winning_rows[i+1][2] << endl;
                     //break do-while loop condition
                     return 0;
                 // All possibilies tested and no one won (yet)
@@ -92,7 +90,7 @@ int main(){
             }
             mode++;
         }  
-    }while(mode <= 17 && mode >= 0);
+    }while(mode <= 30 && mode >= 0);
     
     //Determine of there was a stalemate.
     //If turns equals 18, that means that the board is full
