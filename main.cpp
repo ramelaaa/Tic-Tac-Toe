@@ -18,17 +18,17 @@ int main(){
     bool is_response_valid;
     string user_input = "";
 
-    vector<int> winning_rows = {//Horizontal Possibilities
-                                1,2,3, 
-                                4,5,6,
-                                7,8,9,
+    vector<vector<int>> winning_rows = {//Horizontal Possibilities
+                                {1,2,3}, //0
+                                {4,5,6}, //1
+                                {7,8,9}, //2
                                 //Vertical Possibilities
-                                1,4,7,
-                                2,5,8,
-                                3,6,9,
+                                {1,4,7}, //3
+                                {2,5,8}, //4
+                                {3,6,9}, //5
                                 //Diagonal Possibilities
-                                1,5,9,
-                                3,5,7 };
+                                {1,5,9},// 6
+                                {3,5,7} }; //7
 
     cout << "Let's play Tic Tac Toe! <<" << endl;
     cout << "This is the game board." << endl;
@@ -40,14 +40,14 @@ int main(){
         // Allow Players to play
         while ( (mode % 3 == 1) || (mode % 3 == 2) ){
         	//player 1's turn
-        	if(mode % 3 == 0){
+        	if(mode % 3 == 1){
         		player = 1;
-            	letter = 'X';
+            	letter = 'x';
         	}
         	//player 2's turn
         	else{
         		player = 2;
-            	letter = 'O';
+            	letter = 'o';
         	}
             
             //Allow player to make a selection
@@ -78,17 +78,19 @@ int main(){
         }
         //Check if anyone won, with any of the row possibilites
         if ( mode % 3 == 0){
-            for(int i = 0; i < winning_rows.size(); i += 3){
-                if ((square[winning_rows[i]] == square[winning_rows[i+1]]) 
-                        && (square[winning_rows[i+1]] == square[winning_rows[i+2]])){
+            for(int i = 0; i < winning_rows.size(); i++){
+                if ((square[winning_rows[i][0]] == square[winning_rows[i][1]]) && (square[winning_rows[i][1]] == square[winning_rows[i][2]])){
                     cout << "Player " << player << " wins!" << endl;
+                    cout << i << endl;
+                    cout << winning_rows[i+1][0] << endl;
+                    cout << winning_rows[i+1][1] << endl;
+                    cout << winning_rows[i+1][2] << endl;
                     //break do-while loop condition
-                    mode = -1;
+                    return 0;
                 // All possibilies tested and no one won (yet)
-                }else if(i == winning_rows.size()-3){
-                    mode++;
                 }
             }
+            mode++;
         }  
     }while(mode <= 17 && mode >= 0);
     
@@ -118,8 +120,5 @@ void board(){
 
 //Checks user input if it is an integer between 1 and 9.
 bool check_user_input(string number){   
-    if(number.length() == 1 && isdigit(number[0] && number != "0"){
-        return true;
-    }
-    return false;
+    return number.size() == 1 &&number[0] >= '1' && number[0] <= '9';
 }
